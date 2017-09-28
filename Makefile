@@ -1,5 +1,10 @@
+# This Makefile makes the data for the mystery.
+# If you're trying to solve the mystery, you should ignore this.
+
 DATA_DIR = data
 OUTPUT_EMAIL_FILES = $(addprefix $(DATA_DIR)/emails_clean/, $(shell for i in $$(seq 0 999); do echo "$$i.txt"; done))
+SUSPICIOUS_EMAIL_FILES = src/0.txt src/1.txt src/2.txt
+ALL_EMAIL_FILES = $(shell ./processors/randomize_file_list.py $(OUTPUT_EMAIL_FILES) $(SUSPICIOUS_EMAIL_FILES))
 
 .PHONY: all clean
 
@@ -8,7 +13,7 @@ all: $(DATA_DIR)/all_emails.pdf
 $(DATA_DIR)/all_emails.pdf: $(DATA_DIR)/all_emails.txt
 	cupsfilter $(DATA_DIR)/all_emails.txt > $(DATA_DIR)/all_emails.pdf
 
-$(DATA_DIR)/all_emails.txt: $(OUTPUT_EMAIL_FILES)
+$(DATA_DIR)/all_emails.txt: $(ALL_EMAIL_FILES)
 	rm -f $(DATA_DIR)/all_emails.txt && \
 	for f in $?; do \
 	  cat $$f >> $(DATA_DIR)/all_emails.txt; \

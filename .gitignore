@@ -1,2 +1,6 @@
 /data
 .DS_Store
+/solution/data/*.txt
+/solution/data/emails
+/solution/data/*.json
+/solution/data/*.ndjson
